@@ -1,0 +1,539 @@
+:root {
+    --font-stencil: 'Stardos Stencil', system-ui;
+    --font-mono: 'Share Tech Mono', monospace;
+    --military-green: #4b5320;
+    --desert-sand: #c2b280;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-stencil);
+    letter-spacing: 1px;
+}
+
+body, p, input, button {
+    font-family: var(--font-mono);
+}
+
+body {
+    background-color: var(--carbon);
+    background-image: radial-gradient(#222 1px, transparent 1px);
+    background-size: 30px 30px;
+    color: #aab0a3;
+    font-family: 'Courier New', Courier, monospace;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+header {
+    padding: 60px 40px;
+    transform: rotate(-1deg);
+}
+
+h1 {
+    font-family: var(--font-stencil);
+    font-size: 5rem;
+    color: var(--desert-sand);
+    margin: 0;
+    text-shadow: 3px 3px 0px #000;
+}
+
+.controls { margin-top: 20px; }
+
+#searchBar {
+    background: #000;
+    border: 1px solid var(--military-green);
+    color: var(--military-green);
+    padding: 10px;
+    font-family: var(--font-mono);
+    width: 300px;
+}
+
+.sort-btn {
+    background: var(--military-green);
+    color: var(--desert-sand);
+    border: none;
+    padding: 10px 20px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* CONTENEDOR LIBRE */
+#wiki-container {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+    gap: 30px;
+    justify-content: center;
+}
+
+.category-title {
+    width: 100%;
+    font-family: var(--font-stencil);
+    color: var(--military-green);
+    font-size: 2rem;
+    margin-top: 40px;
+    border-bottom: 1px solid var(--military-green);
+}
+
+/* TARJETAS ESTILO "FILES" */
+.card {
+    background: #1a1c1a;
+    border: 1px solid #333;
+    width: 260px;
+    padding: 20px;
+    cursor: pointer;
+    box-shadow: 10px 10px 15px rgba(0,0,0,0.5);
+    transition: 0.3s;
+    position: relative;
+}
+
+/* Rotaciones aleatorias para el look "libre" */
+.card:nth-child(odd) { transform: rotate(-2deg); }
+.card:nth-child(even) { transform: rotate(1.5deg); }
+
+.card:hover {
+    transform: scale(1.05) rotate(0deg) !important;
+    border-color: var(--desert-sand);
+    z-index: 10;
+}
+
+.card h3 {
+    font-family: var(--font-stencil);
+    color: var(--desert-sand);
+    margin: 10px 0;
+}
+
+/* POP-UP ESTILO EXPEDIENTE */
+/* El contenedor oscuro del fondo */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.9);
+    backdrop-filter: blur(5px);
+    overflow-y: auto; /* Permite que el fondo también haga scroll si es necesario */
+}
+
+/* El "Papel" del expediente */
+.modal-content {
+    background-color: var(--desert-sand);
+    margin: 2% auto; /* Menos margen arriba para ganar espacio */
+    padding: 20px;
+    width: 80%;
+    max-width: 900px;
+    max-height: 90vh; /* ¡CLAVE! Que nunca supere el 90% de la altura de la pantalla */
+    overflow-y: auto; /* ¡CLAVE! Si el texto es largo, aparece scroll interno */
+    border: 2px solid var(--military-green);
+    position: relative;
+    color: #1a1a1a;
+}
+
+/* Ajuste para el texto de Wikipedia */
+#modal-body p {
+    line-height: 1.6;
+    max-height: none; /* Dejamos que el texto se estire lo que necesite */
+}
+
+.close-button {
+    float: right;
+    font-size: 30px;
+    cursor: pointer;
+    color: #444;
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Dos columnas en PC */
+    gap: 20px;
+    align-items: start;
+}
+
+/* En móviles, ponemos la foto arriba y el texto abajo */
+@media (max-width: 768px) {
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        max-height: 85vh;
+    }
+}
+
+.modal-grid img {
+    width: 100%;
+    border: 8px solid #fff;
+    box-shadow: 5px 5px 10px rgba(0,0,0,0.2);
+}
+/* ... (Mantén lo anterior, pero actualiza esto) ... */
+
+.controls {
+    margin-top: 30px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    transform: rotate(0.5deg); /* Desalineado libre */
+}
+
+#searchBar, #originFilter {
+    background: #0a0c0a;
+    border: 1px solid var(--military-green);
+    color: var(--desert-sand);
+    padding: 12px 15px;
+    font-family: var(--font-mono);
+    outline: none;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.5);
+    min-width: 200px;
+}
+
+#searchBar:focus, #originFilter:focus {
+    border-color: var(--desert-sand);
+}
+
+/* Traductor arriba a la derecha */
+#google_translate_element {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+/* --- UNIFICACIÓN DE COLORES TÁCTICOS --- */
+:root {
+    --military-green: #4b533a;
+    --military-green-dark: #353b29;
+    --desert-sand: #c2b280;
+    --desert-sand-dim: #a3956a;
+    --carbon: #121412;
+    --paper: #d9d0ba; 
+}
+
+/* PANEL DE FILTROS */
+.filter-panel {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: rgba(18, 20, 18, 0.9); /* Fondo igual al body */
+    padding: 25px;
+    border: 1px solid var(--military-green);
+    border-radius: 2px;
+}
+
+.filter-label {
+    font-family: var(--font-mono);
+    color: var(--military-green); /* Ahora coincide con el tema */
+    font-size: 0.8rem;
+    font-weight: bold;
+    min-width: 100px;
+    text-transform: uppercase;
+}
+
+/* BOTONES DE FILTRO (Estado Normal) */
+.filter-tag {
+    background: transparent;
+    border: 1px solid var(--military-green);
+    color: var(--military-green);
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-transform: uppercase;
+}
+
+/* BOTONES DE FILTRO (Estado Hover) */
+.filter-tag:hover {
+    background: rgba(75, 83, 58, 0.1);
+    border-color: var(--desert-sand);
+    color: var(--desert-sand);
+}
+
+/* BOTONES DE FILTRO (Estado ACTIVO/SELECCIONADO) */
+.filter-tag.active {
+    background: var(--military-green) !important;
+    color: var(--desert-sand) !important;
+    border-color: var(--military-green) !important;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.4);
+}
+
+/* BOTONES DE ACCIÓN (Reset y Orden) */
+.reset-btn {
+    background: #2a1111; /* Rojo muy oscuro, casi negro */
+    color: #a36a6a;
+    border: 1px solid #442222;
+    padding: 8px 18px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.reset-btn:hover {
+    background: #442222;
+    color: #ffaaaa;
+}
+
+.sort-btn {
+    background: var(--carbon);
+    color: var(--desert-sand);
+    border: 1px solid var(--military-green);
+    padding: 8px 18px;
+    font-family: var(--font-mono);
+    cursor: pointer;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    transition: 0.2s;
+}
+
+.sort-btn:hover {
+    background: var(--military-green);
+    color: var(--desert-sand);
+}
+
+/* --- AJUSTE DE TARJETAS PARA COHERENCIA --- */
+.card {
+    background: #1a1c1a;
+    border: 1px solid var(--military-green); /* Cambiado de #333 a Verde */
+}
+
+.card h3 {
+    color: var(--desert-sand);
+}
+
+.tag {
+    color: var(--military-green); /* Origen ahora en verde */
+}.button-row {
+    max-height: 200px; /* Evita que la lista de países sea infinita */
+    overflow-y: auto;
+    border: 1px solid #1a1a1a;
+    padding: 10px;
+}
+
+/* --- NUEVO CONTENEDOR DE IMAGEN PARA LA TARJETA --- */
+.card-image-container {
+    width: 100%;
+    height: 140px;
+    background: #000;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border: 1px solid var(--military-green);
+    position: relative;
+}
+
+/* El "clipping" o look de foto antigua */
+.card-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.7;
+    filter: sepia(0.5) contrast(1.2) brightness(0.8);
+    transition: 0.3s;
+}
+
+.card:hover .card-image-container img {
+    opacity: 1;
+    filter: none;
+}
+
+/* Efecto de "Grapa" o Refuerzo en la esquina */
+.card-image-container::before {
+    content: "";
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 20px;
+    height: 5px;
+    background: rgba(255,255,255,0.2);
+    transform: rotate(-45deg);
+    z-index: 2;
+}
+
+#cleanerBtn:hover {
+    background: #442222 !important;
+    color: #ffaaaa !important;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.2);
+    cursor: wait;
+}
+
+/* Animación opcional para cuando está escaneando */
+#cleanerBtn:disabled {
+    opacity: 0.6;
+    border-style: dashed;
+}
+/* Contenedor para alinear logo y título */
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Estilo del Logo */
+.site-logo {
+    width: 120px; /* Tamaño ajustable */
+    height: auto;
+    /* Este filtro hace que el logo negro/verde se vea en tono arena desértica */
+    filter: sepia(1) saturate(1) hue-rotate(10deg) brightness(0.9);
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.site-logo:hover {
+    opacity: 1;
+    transform: scale(1.05);
+    filter: none; /* Muestra sus colores originales al pasar el ratón */
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .site-logo {
+        width: 80px;
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    padding-bottom: 20px;
+}
+
+.site-logo {
+    width: 100px;
+    height: auto;
+    filter: sepia(1) saturate(1) hue-rotate(10deg) brightness(0.8); /* Tono desierto */
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 40px;
+    background: rgba(0, 0, 0, 0.3);
+    border-left: 5px solid var(--military-green);
+}
+
+.logo-wrapper {
+    color: var(--desert-sand); /* El color del icono */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 0 10px rgba(194, 178, 128, 0.3));
+}
+
+.svg-logo {
+    transition: transform 0.5s ease;
+}
+
+.header-content:hover .svg-logo {
+    transform: rotate(90deg); /* Animación de rotación al pasar el mouse */
+    color: var(--military-green);
+}
+
+.sub-header {
+    font-family: var(--font-mono);
+    color: var(--military-green);
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    margin: 5px 0 0 0;
+}
+
+/* --- AJUSTES PARA MÓVIL (SISTEMA TÁCTICO) --- */
+@media (max-width: 600px) {
+    
+    /* 1. Ajuste del Header: Logo arriba, título abajo */
+    .header-content {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        text-align: center;
+        border-left: none;
+        border-bottom: 3px solid var(--military-green);
+    }
+
+    h1 {
+        font-size: 1.5rem; /* Título más pequeño para que no se corte */
+    }
+
+    /* 2. Buscador y Botones: Ocupan todo el ancho */
+    .controls {
+        flex-direction: column;
+        padding: 10px;
+        width: 100%;
+    }
+
+    #searchBar {
+        width: 100% !important;
+        font-size: 16px; /* Evita que el iPhone haga zoom automático al escribir */
+    }
+
+    .controls button {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+    /* 3. Filtros: Permitir scroll lateral si son muchos */
+    .button-row {
+        display: flex;
+        overflow-x: auto; /* Scroll de izquierda a derecha */
+        white-space: nowrap;
+        padding-bottom: 10px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .filter-tag {
+        flex: 0 0 auto; /* No dejes que se encojan */
+    }
+
+    /* 4. Cuadrícula de Tarjetas: 1 sola columna o 2 muy pequeñas */
+    #wiki-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* Se ajusta solo */
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .card {
+        width: auto !important; /* Que use el espacio del grid */
+        margin: 0 auto;
+    }
+
+    /* 5. El Modal (Dossier): Que ocupe casi toda la pantalla */
+    .modal-content {
+        width: 95%;
+        margin: 5% auto;
+        padding: 15px;
+    }
+
+    .modal-grid {
+        grid-template-columns: 1fr; /* Foto arriba, texto abajo */
+    }
+
+    .modal-grid img {
+        width: 100%;
+        height: auto;
+    }
+}

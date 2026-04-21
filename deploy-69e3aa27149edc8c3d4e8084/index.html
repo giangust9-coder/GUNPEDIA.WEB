@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GUNPEDIA.WEB</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231a1c1a%22 stroke=%22%23c2b280%22 stroke-width=%228%22/><path d=%22M50 20 L50 80 M20 50 L80 50%22 stroke=%22%23c2b280%22 stroke-width=%228%22/><circle cx=%2250%22 cy=%2250%22 r=%2210%22 fill=%22%234b5320%22/></svg>">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Stardos+Stencil:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+
+    <meta name="google-site-verification" content="mI1GGuIE9B-_IGkJJEpS0LXpJFZty2ra79JyHFqw_0I" />
+    <meta name="description" content="Archivo de Armamento Global: Wiki detallada de modelos de producción de equipo militar, blindados, aeronaves y armas de fuego.">
+    <meta name="keywords" content="militar, armas, tanques, aviones, wiki, base de datos">
+</head>
+<body>
+
+    <div id="google_translate_element"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo-wrapper">
+                <svg width="80" height="80" viewBox="0 0 100 100" class="svg-logo">
+                    <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="2" fill="none" />
+                    <circle cx="50" cy="50" r="35" stroke="currentColor" stroke-width="1" fill="none" opacity="0.5" />
+                    <line x1="50" y1="0" x2="50" y2="100" stroke="currentColor" stroke-width="1" />
+                    <line x1="0" y1="50" x2="100" y2="50" stroke="currentColor" stroke-width="1" />
+                    <ellipse cx="50" cy="50" rx="20" ry="35" stroke="currentColor" stroke-width="1" fill="none" />
+                    <ellipse cx="50" cy="50" rx="35" ry="20" stroke="currentColor" stroke-width="1" fill="none" />
+                    <circle cx="50" cy="50" r="3" fill="currentColor" />
+                </svg>
+            </div>
+
+            <div class="header-text">
+                <h1>GUNPEDIA.WEB</h1>
+                <p class="sub-header">WIKI DE MODELOS DE PRODUCCIÓN // REF: 2026-INTEL</p>
+            </div>
+        </div>
+
+        <div class="controls">
+            <input type="text" id="searchBar" placeholder="BUSCAR DESIGNACIÓN...">
+            <button id="sortBtn" class="sort-btn" onclick="toggleSortOrder()">ORDEN: A-Z ↑</button>
+            <button class="reset-btn" onclick="resetFilters()">RESETEAR SISTEMA</button>
+            <button class="reset-btn" id="cleanerBtn">SCAN</button>
+        </div>
+    </header>
+
+    <main>
+        <div class="filter-panel">
+            <div class="filter-group">
+                <span class="filter-label">CATEGORÍAS:</span>
+                <div id="cat-filters" class="button-row"></div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">PROCEDENCIA:</span>
+                <div id="origin-filters" class="button-row"></div>
+            </div>
+            <div class="filter-group">
+                <span class="filter-label">CONFLICTOS:</span>
+                <div id="wars-filters" class="button-row"></div>
+            </div>
+        </div>
+        </div>
+
+        <div id="wiki-container">
+            </div>
+    </main>
+
+    <div id="weaponModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal()">&times;</span>
+            <div id="modal-body"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'es'}, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>
